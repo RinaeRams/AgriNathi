@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv/
+.venv311/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Credentials and Secrets (NEVER commit these)
+*.pem
+*.key
+*.crt
+google-credentials.json
+agrihex-*.json
+kaggle.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project-specific
+data/collected_images/
+data/audio_recordings/
+*.h5
+*.pkl
+models/*.h5
+models/*.pkl
+
+# Large dataset files (store these elsewhere or use git LFS)
+data/New Plant Diseases Dataset(Augmented)/
+*.zip

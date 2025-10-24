@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Information - AgriNathi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2e7d32;
+            text-align: center;
+        }
+        .location-search {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f0f8f0;
+            border-radius: 8px;
+        }
+        .location-input {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            width: 250px;
+            margin-right: 10px;
+        }
+        .search-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .search-btn:hover {
+            background: #45a049;
+        }
+        .popular-locations {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        .location-btn {
+            background: #e8f5e8;
+            border: 1px solid #4CAF50;
+            padding: 5px 10px;
+            margin: 2px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .location-btn:hover {
+            background: #d4edda;
+        }
+        .weather-card {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .weather-icon {
+            font-size: 48px;
+            margin: 10px 0;
+        }
+        .temperature {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        .location {
+            font-size: 18px;
+            color: #666;
+            margin: 10px 0;
+        }
+        .forecast {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .forecast-day {
+            background: #f0f8f0;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            min-width: 80px;
+        }
+        .advice {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border-left: 4px solid #ffc107;
+        }
+        .advice h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="margin-bottom: 20px;">
+            <button onclick="window.history.back()" style="background: #666; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">← Back</button>
+        </div>
+        <h1>🌤️ Weather Information</h1>
+
+        <div class="location-search">
+            <h2>Enter Location</h2>
+            <input type="text" id="location-input" class="location-input" placeholder="Enter city name..." value="Johannesburg">
+            <button class="search-btn" onclick="searchWeather()">🔍 Search</button>
+            <div class="popular-locations">
+                <p>Popular locations:</p>
+                <button class="location-btn" onclick="setLocation('Johannesburg')">Johannesburg</button>
+                <button class="location-btn" onclick="setLocation('Pretoria')">Pretoria</button>
+                <button class="location-btn" onclick="setLocation('Cape Town')">Cape Town</button>
+                <button class="location-btn" onclick="setLocation('Durban')">Durban</button>
+                <button class="location-btn" onclick="setLocation('Bloemfontein')">Bloemfontein</button>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <p>Loading weather data...</p>
+        </div>
+
+        <div id="weather-content" style="display: none;">
+            <div class="weather-card">
+                <div class="weather-icon" id="weather-icon">☀️</div>
+                <div class="temperature" id="temperature">--°C</div>
+                <div class="location" id="location">Loading location...</div>
+                <div id="description">Loading...</div>
+            </div>
+
+            <div class="forecast" id="forecast">
+                <!-- Forecast will be populated by JavaScript -->
+            </div>
+
+            <div class="advice">
+                <h3>🌾 Agricultural Advice</h3>
+                <p id="agricultural-advice">Loading farming recommendations...</p>
+            </div>
+        </div>
+
+        <div id="error" class="error" style="display: none;">
+            <p>Unable to load weather data. Please check your internet connection and try again.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentLocation = "Johannesburg";
+
+        // Mock weather data for different locations
+        const weatherDataByLocation = {
+            "johannesburg": {
+                location: "Johannesburg, South Africa",
+                temperature: 24,
+                description: "Partly cloudy",
+                icon: "⛅",
+                forecast: [
+                    { day: "Today", temp: 24, icon: "⛅" },
+                    { day: "Tomorrow", temp: 26, icon: "☀️" },
+                    { day: "Day 3", temp: 22, icon: "🌧️" },
+                    { day: "Day 4", temp: 25, icon: "☀️" },
+                    { day: "Day 5", temp: 23, icon: "⛅" }
+                ]
+            },
+            "pretoria": {
+                location: "Pretoria, South Africa",
+                temperature: 25,
+                description: "Sunny",
+                icon: "☀️",
+                forecast: [
+                    { day: "Today", temp: 25, icon: "☀️" },
+                    { day: "Tomorrow", temp: 27, icon: "☀️" },
+                    { day: "Day 3", temp: 24, icon: "⛅" },
+                    { day: "Day 4", temp: 26, icon: "🌧️" },
+                    { day: "Day 5", temp: 23, icon: "☀️" }
+                ]
+            },
+            "cape town": {
+                location: "Cape Town, South Africa",
+                temperature: 18,
+                description: "Windy",
+                icon: "🌬️",
+                forecast: [
+                    { day: "Today", temp: 18, icon: "🌬️" },
+                    { day: "Tomorrow", temp: 20, icon: "⛅" },
+                    { day: "Day 3", temp: 16, icon: "🌧️" },
+                    { day: "Day 4", temp: 19, icon: "☀️" },
+                    { day: "Day 5", temp: 17, icon: "⛅" }
+                ]
+            },
+            "durban": {
+                location: "Durban, South Africa",
+                temperature: 26,
+                description: "Humid",
+                icon: "☀️",
+                forecast: [
+                    { day: "Today", temp: 26, icon: "☀️" },
+                    { day: "Tomorrow", temp: 28, icon: "🌧️" },
+                    { day: "Day 3", temp: 25, icon: "⛅" },
+                    { day: "Day 4", temp: 27, icon: "☀️" },
+                    { day: "Day 5", temp: 24, icon: "🌧️" }
+                ]
+            },
+            "bloemfontein": {
+                location: "Bloemfontein, South Africa",
+                temperature: 22,
+                description: "Clear skies",
+                icon: "☀️",
+                forecast: [
+                    { day: "Today", temp: 22, icon: "☀️" },
+                    { day: "Tomorrow", temp: 24, icon: "☀️" },
+                    { day: "Day 3", temp: 20, icon: "⛅" },
+                    { day: "Day 4", temp: 23, icon: "🌧️" },
+                    { day: "Day 5", temp: 21, icon: "☀️" }
+                ]
+            }
+        };
+
+        function setLocation(location) {
+            document.getElementById('location-input').value = location;
+            currentLocation = location.toLowerCase();
+            searchWeather();
+        }
+
+        function searchWeather() {
+            const input = document.getElementById('location-input').value.trim();
+            if (input) {
+                currentLocation = input.toLowerCase();
+                loadWeatherData();
+            }
+        }
+
+        function getMockWeatherData() {
+            // Try to find exact match first
+            if (weatherDataByLocation[currentLocation]) {
+                return weatherDataByLocation[currentLocation];
+            }
+
+            // Default to Johannesburg if location not found
+            return weatherDataByLocation["johannesburg"];
+        }
+
+        function getAgriculturalAdvice(temperature, description) {
+            let advice = "";
+
+            if (temperature < 15) {
+                advice += "Cold weather detected. Protect sensitive crops from frost. ";
+            } else if (temperature > 30) {
+                advice += "Hot weather conditions. Ensure adequate irrigation and provide shade for livestock. ";
+            }
+
+            if (description.toLowerCase().includes('rain')) {
+                advice += "Rain expected. Prepare drainage systems and avoid working in wet fields to prevent soil compaction. ";
+            } else if (description.toLowerCase().includes('sun') || description.toLowerCase().includes('clear')) {
+                advice += "Sunny conditions. Good time for fieldwork and harvesting. Monitor soil moisture levels. ";
+            }
+
+            if (advice === "") {
+                advice = "Current weather is suitable for most agricultural activities. Continue with regular farming practices.";
+            }
+
+            return advice;
+        }
+
+        function displayWeather(data) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('weather-content').style.display = 'block';
+
+            document.getElementById('weather-icon').textContent = data.icon;
+            document.getElementById('temperature').textContent = `${data.temperature}°C`;
+            document.getElementById('location').textContent = data.location;
+            document.getElementById('description').textContent = data.description;
+
+            const forecastContainer = document.getElementById('forecast');
+            forecastContainer.innerHTML = '';
+
+            data.forecast.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'forecast-day';
+                dayElement.innerHTML = `
+                    <div>${day.icon}</div>
+                    <div><strong>${day.day}</strong></div>
+                    <div>${day.temp}°C</div>
+                `;
+                forecastContainer.appendChild(dayElement);
+            });
+
+            const advice = getAgriculturalAdvice(data.temperature, data.description);
+            document.getElementById('agricultural-advice').textContent = advice;
+        }
+
+        function showError() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+        }
+
+        async function loadWeatherData() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('weather-content').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+
+            try {
+                const weatherData = await fetchWeatherData(currentLocation);
+                displayWeather(weatherData);
+            } catch (error) {
+                console.error('Error loading weather:', error);
+                showError();
+            }
+        }
+
+        async function fetchWeatherData(location) {
+            const apiKey = 'b85d0cf87f68439b6d264708f3419fab'; // OpenWeatherMap API key
+            const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
+            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey}&units=metric`;
+
+            try {
+                // Fetch current weather
+                const currentResponse = await fetch(currentWeatherUrl);
+                if (!currentResponse.ok) {
+                    throw new Error(`Weather API error: ${currentResponse.status}`);
+                }
+                const currentData = await currentResponse.json();
+
+                // Fetch forecast
+                const forecastResponse = await fetch(forecastUrl);
+                if (!forecastResponse.ok) {
+                    throw new Error(`Forecast API error: ${forecastResponse.status}`);
+                }
+                const forecastData = await forecastResponse.json();
+
+                // Process and return formatted data
+                return processWeatherData(currentData, forecastData);
+            } catch (error) {
+                console.error('API fetch error:', error);
+                // Fallback to mock data if API fails
+                return getMockWeatherData();
+            }
+        }
+
+        function processWeatherData(current, forecast) {
+            // Get weather icon
+            const iconCode = current.weather[0].icon;
+            const iconMap = {
+                '01d': '☀️', '01n': '🌙', '02d': '⛅', '02n': '☁️',
+                '03d': '⛅', '03n': '☁️', '04d': '☁️', '04n': '☁️',
+                '09d': '🌧️', '09n': '🌧️', '10d': '🌦️', '10n': '🌧️',
+                '11d': '⛈️', '11n': '⛈️', '13d': '❄️', '13n': '❄️',
+                '50d': '🌫️', '50n': '🌫️'
+            };
+
+            // Process 5-day forecast (taking one reading per day)
+            const dailyForecasts = [];
+            const processedDays = new Set();
+
+            forecast.list.forEach(item => {
+                const date = new Date(item.dt * 1000);
+                const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+
+                if (!processedDays.has(dayName) && dailyForecasts.length < 5) {
+                    processedDays.add(dayName);
+                    const dayLabel = dailyForecasts.length === 0 ? 'Today' :
+                                   dailyForecasts.length === 1 ? 'Tomorrow' :
+                                   `Day ${dailyForecasts.length + 1}`;
+
+                    dailyForecasts.push({
+                        day: dayLabel,
+                        temp: Math.round(item.main.temp),
+                        icon: iconMap[item.weather[0].icon] || '⛅'
+                    });
+                }
+            });
+
+            return {
+                location: `${current.name}, ${current.sys.country}`,
+                temperature: Math.round(current.main.temp),
+                description: current.weather[0].description.charAt(0).toUpperCase() + current.weather[0].description.slice(1),
+                icon: iconMap[iconCode] || '⛅',
+                forecast: dailyForecasts
+            };
+        }
+
+        // Load initial weather data
+        loadWeatherData();
+
+        // Allow Enter key to search
+        document.getElementById('location-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchWeather();
+            }
+        });
+
+        // In a real implementation, you would fetch from a weather API:
+        /*
+        async function fetchWeather() {
+            try {
+                const response = await fetch('/api/weather');
+                const data = await response.json();
+                displayWeather(data);
+            } catch (error) {
+                console.error('Error fetching weather:', error);
+                showError();
+            }
+        }
+        fetchWeather();
+        */
+    </script>
+</body>
+</html>

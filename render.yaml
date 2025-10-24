@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: AgriNathiApp
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app --workers 3 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      # Add other environment variables (API keys, credentials) in Render dashboard when connecting the repo.

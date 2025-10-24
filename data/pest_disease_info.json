@@ -1,0 +1,93 @@
+{
+  "common_pests": {
+    "aphids": {
+      "description": "Small, soft-bodied insects that suck sap from plants",
+      "symptoms": ["Curled leaves", "Stunted growth", "Sticky honeydew residue"],
+      "treatment": ["Neem oil spray", "Insecticidal soap", "Introduce ladybugs"],
+      "prevention": ["Plant resistant varieties", "Avoid over-fertilizing", "Regular monitoring"]
+    },
+    "caterpillars": {
+      "description": "Larval stage of moths and butterflies that chew on leaves",
+      "symptoms": ["Holes in leaves", "Defoliation", "Frass (insect droppings)"],
+      "treatment": ["Hand picking", "Bacillus thuringiensis (Bt)", "Insecticides"],
+      "prevention": ["Crop rotation", "Row covers", "Companion planting"]
+    },
+    "whiteflies": {
+      "description": "Tiny white flying insects that suck plant sap",
+      "symptoms": ["Yellowing leaves", "Sticky residue", "Sooty mold growth"],
+      "treatment": ["Yellow sticky traps", "Neem oil", "Insecticidal soap"],
+      "prevention": ["Avoid over-watering", "Remove weeds", "Screen greenhouses"]
+    },
+    "beetles": {
+      "description": "Hard-shelled insects that chew on plants",
+      "symptoms": ["Chewed leaves", "Skeletonized foliage", "Bore holes in stems"],
+      "treatment": ["Hand picking", "Pyrethrin sprays", "Row covers"],
+      "prevention": ["Crop rotation", "Clean up debris", "Plant trap crops"]
+    },
+    "mites": {
+      "description": "Tiny spider-like pests that suck plant juices",
+      "symptoms": ["Stippled leaves", "Webbing", "Bronzed or yellowed foliage"],
+      "treatment": ["Horticultural oil", "Insecticidal soap", "Predatory mites"],
+      "prevention": ["High humidity control", "Avoid dust", "Regular washing"]
+    }
+  },
+  "common_diseases": {
+    "powdery_mildew": {
+      "description": "Fungal disease causing white powdery coating on leaves",
+      "symptoms": ["White powdery spots", "Leaf curling", "Stunted growth"],
+      "treatment": ["Fungicides", "Baking soda spray", "Improve air circulation"],
+      "prevention": ["Avoid overhead watering", "Space plants properly", "Remove infected parts"]
+    },
+    "blight": {
+      "description": "Bacterial or fungal disease causing rapid tissue death",
+      "symptoms": ["Dark spots on leaves", "Wilting", "Rotting fruits"],
+      "treatment": ["Copper fungicides", "Remove infected plants", "Crop rotation"],
+      "prevention": ["Proper spacing", "Avoid wet conditions", "Resistant varieties"]
+    },
+    "rust": {
+      "description": "Fungal disease causing rusty-colored spots",
+      "symptoms": ["Orange/brown pustules", "Leaf yellowing", "Premature defoliation"],
+      "treatment": ["Fungicides", "Remove infected leaves", "Improve drainage"],
+      "prevention": ["Avoid overhead watering", "Space plants", "Resistant varieties"]
+    },
+    "root_rot": {
+      "description": "Fungal disease affecting plant roots",
+      "symptoms": ["Wilting", "Yellowing leaves", "Root discoloration"],
+      "treatment": ["Fungicides", "Improve drainage", "Remove affected plants"],
+      "prevention": ["Well-draining soil", "Avoid over-watering", "Sterilize tools"]
+    },
+    "bacterial_spot": {
+      "description": "Bacterial disease causing spots on leaves and fruits",
+      "symptoms": ["Dark spots with yellow halos", "Leaf drop", "Fruit lesions"],
+      "treatment": ["Copper sprays", "Remove infected parts", "Antibiotics"],
+      "prevention": ["Avoid wet foliage", "Crop rotation", "Resistant varieties"]
+    }
+  },
+  "crop_specific_issues": {
+    "rice": {
+      "pests": ["Brown planthopper", "Rice stem borer", "Rice leaf folder"],
+      "diseases": ["Rice blast", "Bacterial blight", "Sheath blight"],
+      "management": ["Integrated pest management", "Balanced fertilization", "Proper water management"]
+    },
+    "maize": {
+      "pests": ["Corn borer", "Corn earworm", "Fall armyworm"],
+      "diseases": ["Corn smut", "Gray leaf spot", "Northern corn leaf blight"],
+      "management": ["Crop rotation", "Bt varieties", "Scouting programs"]
+    },
+    "wheat": {
+      "pests": ["Aphids", "Hessian fly", "Wheat stem sawfly"],
+      "diseases": ["Wheat rust", "Powdery mildew", "Septoria leaf blotch"],
+      "management": ["Disease-resistant varieties", "Proper spacing", "Fungicide application"]
+    },
+    "tomatoes": {
+      "pests": ["Tomato hornworm", "Aphids", "Whiteflies"],
+      "diseases": ["Late blight", "Fusarium wilt", "Bacterial spot"],
+      "management": ["Mulching", "Staking", "Proper pruning"]
+    },
+    "potatoes": {
+      "pests": ["Colorado potato beetle", "Aphids", "Potato tuber moth"],
+      "diseases": ["Late blight", "Early blight", "Potato virus Y"],
+      "management": ["Hilling", "Crop rotation", "Seed treatment"]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "demo@agrinathi.com": {
+    "id": "1",
+    "firstName": "Demo",
+    "lastName": "Farmer",
+    "email": "demo@agrinathi.com",
+    "password": "demo123",
+    "phone": "+27123456789",
+    "location": "johannesburg",
+    "farmSize": "",
+    "registrationDate": "2025-10-24T11:17:16.620819",
+    "lastLogin": null
+  },
+  "innocentrinae4@gmail.com": {
+    "id": "2",
+    "firstName": "Rinae",
+    "lastName": "Ramadi",
+    "email": "innocentrinae4@gmail.com",
+    "password": "Ramadi@R09",
+    "phone": "0661481164",
+    "location": "pretoria",
+    "farmSize": "1",
+    "registrationDate": "2025-10-24T11:27:30.895160",
+    "lastLogin": null
+  }
+}
