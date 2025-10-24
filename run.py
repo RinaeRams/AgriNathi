@@ -6,8 +6,14 @@ Main application runner
 
 from app import app, create_app
 
+def init_app():
+    """Initialize the application and register all components"""
+    # Initialize the app and register all routes and components
+    create_app()
+    return app
+
 # Initialize the application
-create_app()
+app = init_app()
 
 if __name__ == '__main__':
     print("Starting AgriNathi Agricultural Voice Assistant...")

@@ -1,11 +1,8 @@
 """WSGI entry point for AgriNathi"""
-from app import app, create_app
+from run import init_app
 
 # Initialize the application
-create_app()
-
-# Export for WSGI
-application = app
+app = application = init_app()
 
 if __name__ == '__main__':
     application.run()

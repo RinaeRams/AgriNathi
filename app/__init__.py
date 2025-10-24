@@ -19,7 +19,12 @@ except ImportError:
 app = Flask(__name__)
 
 def create_app():
+    """Initialize and configure the Flask application"""
     global app
+    
+    # Ensure app exists
+    if not app:
+        app = Flask(__name__)
 
     # Configuration
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-here')
