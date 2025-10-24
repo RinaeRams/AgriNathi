@@ -1,5 +1,8 @@
 """WSGI entry point for AgriNathi"""
-from run import app
+from app import app, create_app
+
+# Initialize the application
+create_app()
 
 # Export for WSGI
 application = app

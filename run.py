@@ -4,13 +4,10 @@ AgriNathi - Agricultural Voice Assistant
 Main application runner
 """
 
-from app import create_app
+from app import app, create_app
 
-# Create the Flask application instance
-app = create_app()
-
-# Export for gunicorn
-application = app
+# Initialize the application
+create_app()
 
 if __name__ == '__main__':
     print("Starting AgriNathi Agricultural Voice Assistant...")

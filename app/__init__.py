@@ -15,8 +15,11 @@ except ImportError:
     print("Warning: Vonage not available. IVR features will use basic NCCO responses.")
     VONAGE_AVAILABLE = False
 
+# Create the Flask application instance
+app = Flask(__name__)
+
 def create_app():
-    app = Flask(__name__)
+    global app
 
     # Configuration
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-here')
